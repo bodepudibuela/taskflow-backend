@@ -11,6 +11,11 @@ const { errorHandler, notFound } = require('./middleware/errorHandler');
 
 const app = express();
 const httpServer = http.createServer(app);
+// — Express CORS
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  credentials: true,
+}));
 
 // ── Socket.IO ─────────────────────────────────────────────
 const io = new Server(httpServer, {
