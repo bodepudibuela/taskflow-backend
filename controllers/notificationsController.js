@@ -8,7 +8,7 @@ const { pool } = require('../config/database');
  */
 const getNotifications = async (req, res, next) => {
   try {
-    const limit = Math.min(parseInt(req.query.limit) || 20, 50);
+    const limit = Math.min(Number.isFinite(parseInt(req.query.limit)) ? parseInt(req.query.limit) : 20, 50);
     const [notifications] = await pool.execute(
       'SELECT * FROM notifications WHERE user_id = ? ORDER BY created_at DESC LIMIT ?',
       [req.user.id, limit]
