@@ -10,8 +10,8 @@ const getNotifications = async (req, res, next) => {
   try {
     const limit = Math.min(Number.isFinite(parseInt(req.query.limit)) ? parseInt(req.query.limit) : 20, 50);
     const [notifications] = await pool.execute(
-      'SELECT * FROM notifications WHERE user_id = ? ORDER BY created_at DESC LIMIT ?',
-      [req.user.id, limit]
+      `SELECT * FROM notifications WHERE user_id = ? ORDER BY created_at DESC LIMIT ${limit}`,
+         [req.user.id]
     );
     const [[{ unread_count }]] = await pool.execute(
       'SELECT COUNT(*) as unread_count FROM notifications WHERE user_id = ? AND is_read = FALSE',
