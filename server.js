@@ -20,8 +20,8 @@ app.use(cors({
 // ── Socket.IO ─────────────────────────────────────────────
 const io = new Server(httpServer, {
   cors: {
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-    methods: ['GET', 'POST'],
+        origin: '*',
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   },
 });
