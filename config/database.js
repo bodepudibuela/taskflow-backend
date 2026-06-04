@@ -1,8 +1,6 @@
-// backend/config/database.js
 const mysql = require('mysql2/promise');
 require('dotenv').config();
 
-// Create connection pool for better performance
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
   port: process.env.DB_PORT || 3306,
@@ -12,10 +10,10 @@ const pool = mysql.createPool({
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
+  timezone: '+00:00',
   ssl: { rejectUnauthorized: false },
 });
 
-// Test connection on startup
 const testConnection = async () => {
   try {
     const connection = await pool.getConnection();
