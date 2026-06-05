@@ -12,8 +12,19 @@ const { errorHandler, notFound } = require('./middleware/errorHandler');
 const app = express();
 const httpServer = http.createServer(app);
 // — Express CORS
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  'http://localhost:3000'
+].filter(Boolean);
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 }));
 
